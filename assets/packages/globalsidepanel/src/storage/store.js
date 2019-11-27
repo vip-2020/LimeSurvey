@@ -15,7 +15,8 @@ Vue.use(Vuex);
 export default function(userid = null){
     const vuexLocal = new VuexPersistence({
         key: userid == null ? 'lsglobalsidemenu_'+userid : 'lsglobalsidemenu',
-        storage: window.localStorage
+        saveState: window.LS.localStorageInterface.getSaveState(userid == null ? 'lsglobalsidemenu_'+userid : 'lsglobalsidemenu'),
+        storage: window.LS.localStorageInterface.getLocalStorage()
     });
     
     return new Vuex.Store({

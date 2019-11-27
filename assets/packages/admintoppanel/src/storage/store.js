@@ -14,7 +14,8 @@ Vue.use(Vuex);
 export default function(user_id, surveyId){
     const vuexLocal = new VuexPersistence({
         key: 'lstopbar_'+user_id+'_'+surveyId,
-        storage: window.localStorage
+        saveState: window.LS.localStorageInterface.getSaveState('lstopbar_'+user_id+'_'+surveyId),
+        storage: window.LS.localStorageInterface.getLocalStorage()
     });
     
     return new Vuex.Store({

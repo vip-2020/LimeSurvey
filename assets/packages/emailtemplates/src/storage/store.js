@@ -15,7 +15,8 @@ Vue.use(Vuex);
 export default function(sid){
     const vuexLocal = new VuexPersistence({
         key: 'emailtemplateeditor_'+sid,
-        storage: window.localStorage
+        saveState: window.LS.localStorageInterface.getSaveState('emailtemplateeditor_'+sid),
+        storage: window.LS.localStorageInterface.getLocalStorage()
     });
     
     return new Vuex.Store({

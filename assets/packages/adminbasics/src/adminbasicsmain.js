@@ -57,6 +57,7 @@ import notificationSystem from './components/notifications';
 import gridAction from './components/gridAction';
 import EventBus from './components/eventbus';
 import LOG from './components/lslog';
+import LocalStorageInterface from './components/LocalStorageInterface';
 
 const AdminCore = function(){
     //Singelton Pattern -> the AdminCore functions can only be nound once.
@@ -157,7 +158,8 @@ const AdminCore = function(){
                 {EventBus},
                 subquestionAndAnswersGlobalMethods, 
                 notificationSystem, 
-                gridAction
+                gridAction,
+                {localStorageInterface: new LocalStorageInterface()} 
             );
 
             /*

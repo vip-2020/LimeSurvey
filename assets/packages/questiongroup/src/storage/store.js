@@ -15,7 +15,8 @@ Vue.use(Vuex);
 export default function(questionGroupId){
     const vuexLocal = new VuexPersistence({
         key: 'lsquestiongroupedit_'+questionGroupId,
-        storage: window.localStorage
+        saveState: window.LS.localStorageInterface.getSaveState('lsquestiongroupedit_'+questionGroupId),
+        storage: window.LS.localStorageInterface.getLocalStorage()
     });
     
     return new Vuex.Store({

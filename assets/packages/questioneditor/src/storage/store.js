@@ -15,7 +15,8 @@ Vue.use(Vuex);
 export default function(questionId){
     const vuexLocal = new VuexPersistence({
         key: 'lsquestionedit_'+questionId,
-        storage: window.localStorage
+        saveState: window.LS.localStorageInterface.getSaveState('lsquestionedit_'+questionId),
+        storage: window.LS.localStorageInterface.getLocalStorage()
     });
     
     return new Vuex.Store({

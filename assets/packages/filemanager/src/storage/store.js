@@ -15,7 +15,8 @@ Vue.use(Vuex);
 export default function(surveyId = null){
     const vuexLocal = new VuexPersistence({
         key: surveyId == null ? 'lsfilemanager_'+surveyId : 'lsfilemanager',
-        storage: window.localStorage
+        saveState: window.LS.localStorageInterface.getSaveState(surveyId == null ? 'lsfilemanager_'+surveyId : 'lsfilemanager'),
+        storage: window.LS.localStorageInterface.getLocalStorage()
     });
     
     return new Vuex.Store({
