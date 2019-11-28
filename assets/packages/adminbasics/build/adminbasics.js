@@ -42024,7 +42024,7 @@
 	        created: new Date().getTime()
 	      };
 	      this.refreshArchive();
-	      return this.saveState;
+	      return this.createSaveState(name);
 	    }
 	    /**
 	     * Cleanup and refresh method.
@@ -42093,6 +42093,11 @@
 	        }
 	      }
 	    }
+	  }, {
+	    key: "updateArchiveTimestamp",
+	    value: function updateArchiveTimestamp(name) {
+	      this.archive[name].created = new Date().getTime();
+	    }
 	    /**
 	     * SaveState method as used in VuexPersist
 	     * @see https://github.com/championswimmer/vuex-persist/blob/master/src/index.ts#L218
@@ -42103,9 +42108,14 @@
 	     */
 
 	  }, {
-	    key: "saveState",
-	    value: function saveState(key, state, storage) {
-	      storage.setItem(key, JSON.stringify(state));
+	    key: "createSaveState",
+	    value: function createSaveState(name) {
+	      var saveState = function saveState(key, state, storage) {
+	        LS.localStorageInterface.updateArchiveTimestamp(name);
+	        storage.setItem(key, JSON.stringify(state));
+	      };
+
+	      return saveState;
 	    }
 	    /**
 	     * Returns the window localStorage

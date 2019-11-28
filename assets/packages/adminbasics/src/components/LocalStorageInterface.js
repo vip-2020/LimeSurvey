@@ -47,7 +47,7 @@ export default class LocalStorageInterface {
         }
 
         this.refreshArchive();
-        return this.saveState;
+        return this.createSaveState(name);
     }
     
     /**
@@ -104,6 +104,10 @@ export default class LocalStorageInterface {
         }
     }
 
+    updateArchiveTimestamp(name) {
+        this.archive[name].created = new Date().getTime();
+    }
+
     /**
      * SaveState method as used in VuexPersist
      * @see https://github.com/championswimmer/vuex-persist/blob/master/src/index.ts#L218
@@ -112,11 +116,17 @@ export default class LocalStorageInterface {
      * @param Object state 
      * @param Storage storage 
      */
-    saveState(key, state, storage) {
-        storage.setItem(
-            key,
-            JSON.stringify(state)
-        );
+    createSaveState(name) {
+        const saveState = function(key, state, storage) {
+            LS.localStorageInterface.updateArchiveTimestamp(name);
+            storage.setItem(
+                key,
+                JSON.stringify(state)
+            );
+        }
+
+        return saveState;
+
     }
 
     /**
