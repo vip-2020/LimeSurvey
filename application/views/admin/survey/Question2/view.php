@@ -17,7 +17,10 @@ if (App()->session['questionselectormode'] !== 'default') {
 } else {
     $selectormodeclass = App()->getConfig('defaultquestionselectormode');
 }
+
 uasort($aQuestionTypeList, "questionTitleSort");
+
+
 foreach ($aQuestionTypeList as $questionType) {
     $htmlReadyGroup = str_replace(' ', '_', strtolower($questionType['group']));
     if (!isset($aQuestionTypeGroups[$htmlReadyGroup])) {
@@ -46,6 +49,37 @@ foreach ($aQuestionTypeList as $questionType) {
             </div>';
     }
         $aQuestionTypeGroups[$htmlReadyGroup]['questionTypes'][] = $questionType;
+}
+
+/*
+ * Resort $aQuestionTypeGroups, like the groups are sorted in LS3
+ * sorting groups in LS3 is:
+ *    Single choice questions
+ *    Arrays
+ *    Maskquestions
+ *    Text questions
+ *    Multiple choice questions
+ *
+ * todo: refactoring --> the sorting should be done in xml file, not hard coding like it is now
+ */
+$newQuestionTypeSort = array();
+if(isset($aQuestionTypeGroups['single_choice_questions'])) {
+    $newQuestionTypeSort['single_choice_questions'] = $aQuestionTypeGroups['single_choice_questions'];
+}
+if(isset($aQuestionTypeGroups['arrays'])) {
+    $newQuestionTypeSort['arrays'] = $aQuestionTypeGroups['arrays'];
+}
+if(isset($aQuestionTypeGroups['mask_questions'])) {
+    $newQuestionTypeSort['mask_quesions'] = $aQuestionTypeGroups['mask_questions'];
+}
+if(isset($aQuestionTypeGroups['text_questions'])){
+    $newQuestionTypeSort['text_questions'] = $aQuestionTypeGroups['text_questions'];
+}
+if(isset($aQuestionTypeGroups['multiple_choice_questions'])) {
+    $newQuestionTypeSort['multiple_choice_questions'] = $aQuestionTypeGroups['multiple_choice_questions'];
+}
+if(count($newQuestionTypeSort) > 0){
+    $aQuestionTypeGroups = $newQuestionTypeSort;
 }
 
 $oQuestionSelector = $this->beginWidget(
