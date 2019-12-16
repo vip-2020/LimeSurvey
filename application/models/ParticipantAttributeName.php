@@ -763,9 +763,11 @@ class ParticipantAttributeName extends LSActiveRecord
         $oParticipantAttributeName->attribute_type = $data['attribute_type'];
         $oParticipantAttributeName->defaultname = $data['defaultname'];
         $oParticipantAttributeName->visible = $data['visible'];
-        $oParticipantAttributeName->encrypted = $data['encrypted'];
+        $oParticipantAttributeName->encrypted = 'N';
+        $oParticipantAttributeName->core_attribute = 'N';
         $oParticipantAttributeName->save();
-        $iAttributeID = $oParticipantAttributeName->attribute_id;
+
+        $iAttributeID = $oParticipantAttributeName->getPrimaryKey();
 
         $oParticipantAttributeNameLang = new ParticipantAttributeNameLang;
         $oParticipantAttributeNameLang->attribute_id = $iAttributeID;
